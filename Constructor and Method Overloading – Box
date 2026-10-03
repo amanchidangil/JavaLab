@@ -1,0 +1,51 @@
+class Box {
+    double length, breadth, height;
+
+    // No dimensions
+    Box() {
+        length = breadth = height = 0;
+    }
+
+    // One dimension
+    Box(double side) {
+        length = breadth = height = side;
+    }
+
+    // Three dimensions
+    Box(double l, double b, double h) {
+        length = l;
+        breadth = b;
+        height = h;
+    }
+
+    // Volume with no parameter
+    void volume() {
+        System.out.println("Volume = " + (length * breadth * height));
+    }
+
+    // Overloaded volume method
+    double volume(double side) {
+        return side * side * side;
+    }
+
+    // Overloaded volume method
+    double volume(double l, double b, double h) {
+        return l * b * h;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Box b1 = new Box();
+        Box b2 = new Box(5);
+        Box b3 = new Box(10, 5, 4);
+
+        b1.volume();
+        b2.volume();
+        b3.volume();
+
+        System.out.println("Cube Volume: " + b2.volume(5));
+        System.out.println("Box Volume: " + b3.volume(10, 5, 4));
+    }
+}
