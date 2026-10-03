@@ -1,0 +1,33 @@
+interface Printable {
+    void print();
+}
+
+class Student implements Printable {
+    void details() {
+        System.out.println("Student: Aman");
+    }
+
+    public void print() {
+        details();
+    }
+}
+
+class Teacher implements Printable {
+    void details() {
+        System.out.println("Teacher: Sreekala Miss");
+    }
+
+    public void print() {
+        details();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student();
+        Teacher t = new Teacher();
+
+        s.print();
+        t.print();
+    }
+}
