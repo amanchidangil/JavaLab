@@ -1,0 +1,64 @@
+import java.io.*;
+import java.util.Scanner;
+
+public class EmployeeRecord {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            DataOutputStream dos =
+                    new DataOutputStream(
+                            new FileOutputStream("employee.dat", true));
+
+            System.out.print("Enter Employee ID: ");
+            int id = sc.nextInt();
+            sc.nextLine();
+
+            System.out.print("Enter Employee Name: ");
+            String name = sc.nextLine();
+
+            System.out.print("Enter Salary: ");
+            double salary = sc.nextDouble();
+
+            
+            dos.writeInt(id);
+            dos.writeUTF(name);
+            dos.writeDouble(salary);
+
+            dos.close();
+
+            System.out.println("\nEmployee record saved.");
+
+            // Read all employee records
+            DataInputStream dis =
+                    new DataInputStream(
+                            new FileInputStream("employee.dat"));
+
+            System.out.println("\nAll Employee Details:");
+
+            try {
+                while (true) {
+                    int empId = dis.readInt();
+                    String empName = dis.readUTF();
+                    double empSalary = dis.readDouble();
+
+                    System.out.println("\nEmployee ID: " + empId);
+                    System.out.println("Name: " + empName);
+                    System.out.println("Salary: " + empSalary);
+                }
+
+            } catch (EOFException e) {
+                
+            }
+
+            dis.close();
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+
+        } finally {
+            sc.close();
+        }
+    }
+}
