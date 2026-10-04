@@ -1,0 +1,72 @@
+class TicketBooking {
+
+    private int tickets = 5;
+
+    public synchronized void bookTicket(String customerName) {
+
+        if (tickets > 0) {
+
+            System.out.println(
+                customerName + " is booking a ticket..."
+            );
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+
+            tickets--;
+
+            System.out.println(
+                customerName + " successfully booked a ticket."
+            );
+
+            System.out.println(
+                "Remaining Tickets: " + tickets
+            );
+
+        } else {
+
+            System.out.println(
+                customerName + " - No tickets available."
+            );
+        }
+    }
+}
+
+class Customer extends Thread {
+
+    TicketBooking booking;
+
+    Customer(TicketBooking booking, String name) {
+        super(name);
+        this.booking = booking;
+    }
+
+    public void run() {
+        booking.bookTicket(getName());
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        TicketBooking booking = new TicketBooking();
+
+        Customer c1 = new Customer(booking, "Customer 1");
+        Customer c2 = new Customer(booking, "Customer 2");
+        Customer c3 = new Customer(booking, "Customer 3");
+        Customer c4 = new Customer(booking, "Customer 4");
+        Customer c5 = new Customer(booking, "Customer 5");
+        Customer c6 = new Customer(booking, "Customer 6");
+
+        c1.start();
+        c2.start();
+        c3.start();
+        c4.start();
+        c5.start();
+        c6.start();
+    }
+}
