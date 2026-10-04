@@ -1,0 +1,113 @@
+import java.awt.*;
+import java.awt.event.*;
+
+public class StudentRegistration extends Frame implements ActionListener {
+
+    TextField name, rollNo, email;
+    Choice course;
+    Checkbox male, female;
+    Button submit, clear;
+    Panel panel;
+
+    StudentRegistration() {
+        setTitle("Student Registration Form");
+        setSize(450, 400);
+        setLayout(new BorderLayout());
+
+        panel = new Panel(new GridLayout(6, 2, 10, 10));
+
+        panel.add(new Label("Name:"));
+        name = new TextField();
+        panel.add(name);
+
+        panel.add(new Label("Roll No:"));
+        rollNo = new TextField();
+        panel.add(rollNo);
+
+        panel.add(new Label("Email:"));
+        email = new TextField();
+        panel.add(email);
+
+        panel.add(new Label("Course:"));
+        course = new Choice();
+        course.add("BSc Computer Science");
+        course.add("BCA");
+        course.add("BCom");
+        course.add("BA");
+        panel.add(course);
+
+        panel.add(new Label("Gender:"));
+        Panel genderPanel = new Panel();
+        male = new Checkbox("Male");
+        female = new Checkbox("Female");
+        genderPanel.add(male);
+        genderPanel.add(female);
+        panel.add(genderPanel);
+
+        submit = new Button("Submit");
+        clear = new Button("Clear");
+
+        panel.add(submit);
+        panel.add(clear);
+
+        add(panel, BorderLayout.CENTER);
+
+        submit.addActionListener(this);
+        clear.addActionListener(this);
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                dispose();
+            }
+        });
+
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == submit) {
+            String gender = "";
+
+            if (male.getState())
+                gender = "Male";
+            else if (female.getState())
+                gender = "Female";
+
+            System.out.println("----- Student Details -----");
+            System.out.println("Name: " + name.getText());
+            System.out.println("Roll No: " + rollNo.getText());
+            System.out.println("Email: " + email.getText());
+            System.out.println("Course: " + course.getSelectedItem());
+            System.out.println("Gender: " + gender);
+
+            // Display using dialog
+            Dialog d = new Dialog(this, "Student Details", true);
+            d.setLayout(new FlowLayout());
+            d.setSize(350, 200);
+
+            d.add(new Label("Name: " + name.getText()));
+            d.add(new Label("Roll No: " + rollNo.getText()));
+            d.add(new Label("Course: " + course.getSelectedItem()));
+
+            Button ok = new Button("OK");
+            d.add(ok);
+
+            ok.addActionListener(x -> d.dispose());
+
+            d.setVisible(true);
+        }
+
+        if (e.getSource() == clear) {
+            name.setText("");
+            rollNo.setText("");
+            email.setText("");
+            course.select(0);
+            male.setState(false);
+            female.setState(false);
+        }
+    }
+
+    public static void main(String[] args) {
+        new StudentRegistration();
+    }
+}
