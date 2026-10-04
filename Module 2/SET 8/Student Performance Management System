@@ -1,0 +1,100 @@
+import java.awt.*;
+import java.awt.event.*;
+
+public class StudentPerformance extends Frame implements ActionListener {
+
+    TextField name, rollNo, mark1, mark2, mark3;
+    TextField total, average;
+    Button calculate, clear;
+
+    StudentPerformance() {
+
+        setTitle("Student Performance Management System");
+        setSize(500, 450);
+        setLayout(new GridLayout(8, 2, 10, 10));
+
+        add(new Label("Student Name:"));
+        name = new TextField();
+        add(name);
+
+        add(new Label("Roll Number:"));
+        rollNo = new TextField();
+        add(rollNo);
+
+        add(new Label("Mark 1:"));
+        mark1 = new TextField();
+        add(mark1);
+
+        add(new Label("Mark 2:"));
+        mark2 = new TextField();
+        add(mark2);
+
+        add(new Label("Mark 3:"));
+        mark3 = new TextField();
+        add(mark3);
+
+        add(new Label("Total:"));
+        total = new TextField();
+        total.setEditable(false);
+        add(total);
+
+        add(new Label("Average:"));
+        average = new TextField();
+        average.setEditable(false);
+        add(average);
+
+        calculate = new Button("Calculate");
+        clear = new Button("Clear");
+
+        add(calculate);
+        add(clear);
+
+        calculate.addActionListener(this);
+        clear.addActionListener(this);
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                dispose();
+            }
+        });
+
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == calculate) {
+
+            try {
+                double m1 = Double.parseDouble(mark1.getText());
+                double m2 = Double.parseDouble(mark2.getText());
+                double m3 = Double.parseDouble(mark3.getText());
+
+                double t = m1 + m2 + m3;
+                double avg = t / 3;
+
+                total.setText(String.valueOf(t));
+                average.setText(String.format("%.2f", avg));
+
+            } catch (NumberFormatException ex) {
+                total.setText("Invalid input");
+                average.setText("Invalid input");
+            }
+        }
+
+        else if (e.getSource() == clear) {
+
+            name.setText("");
+            rollNo.setText("");
+            mark1.setText("");
+            mark2.setText("");
+            mark3.setText("");
+            total.setText("");
+            average.setText("");
+        }
+    }
+
+    public static void main(String[] args) {
+        new StudentPerformance();
+    }
+}
