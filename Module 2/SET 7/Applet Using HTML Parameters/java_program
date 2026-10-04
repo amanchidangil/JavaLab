@@ -1,0 +1,47 @@
+import java.applet.Applet;
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class ParameterApplet extends Applet {
+
+    String message;
+    String bgColor;
+    String fgColor;
+
+    public void init() {
+
+        message = getParameter("message");
+        bgColor = getParameter("bgcolor");
+        fgColor = getParameter("fgcolor");
+
+        setBackground(getColor(bgColor));
+        setForeground(getColor(fgColor));
+    }
+
+    public Color getColor(String color) {
+
+        if (color.equalsIgnoreCase("red"))
+            return Color.RED;
+
+        if (color.equalsIgnoreCase("blue"))
+            return Color.BLUE;
+
+        if (color.equalsIgnoreCase("green"))
+            return Color.GREEN;
+
+        if (color.equalsIgnoreCase("yellow"))
+            return Color.YELLOW;
+
+        if (color.equalsIgnoreCase("black"))
+            return Color.BLACK;
+
+        if (color.equalsIgnoreCase("white"))
+            return Color.WHITE;
+
+        return Color.GRAY;
+    }
+
+    public void paint(Graphics g) {
+        g.drawString(message, 100, 100);
+    }
+}
