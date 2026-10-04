@@ -1,0 +1,13 @@
+<html>
+<body>
+
+<applet code="ParameterApplet.class" width="400" height="200">
+
+    <param name="message" value="Welcome to Java Applets">
+    <param name="bgcolor" value="yellow">
+    <param name="fgcolor" value="blue">
+
+</applet>
+
+</body>
+</html>
