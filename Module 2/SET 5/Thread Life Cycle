@@ -1,0 +1,35 @@
+class LifeCycle extends Thread {
+
+    public void run() {
+        try {
+            System.out.println("Thread is Running");
+
+            Thread.sleep(2000);
+
+            System.out.println("Thread is Awake and Running");
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+
+        LifeCycle t = new LifeCycle();
+
+        System.out.println("Thread State after creation: " + t.getState());
+
+        t.start();
+
+        System.out.println("Thread State after start(): " + t.getState());
+
+        Thread.sleep(500);
+
+        System.out.println("Thread State during sleep: " + t.getState());
+
+        t.join();
+
+        System.out.println("Thread State after completion: " + t.getState());
+    }
+}
