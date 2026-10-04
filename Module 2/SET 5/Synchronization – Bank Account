@@ -1,0 +1,75 @@
+class BankAccount {
+
+    private int balance = 1000;
+
+    public synchronized void deposit(int amount) {
+        balance += amount;
+        System.out.println(
+            Thread.currentThread().getName() +
+            " deposited " + amount +
+            " | Balance = " + balance
+        );
+    }
+
+    public synchronized void withdraw(int amount) {
+
+        if (balance >= amount) {
+            balance -= amount;
+
+            System.out.println(
+                Thread.currentThread().getName() +
+                " withdrew " + amount +
+                " | Balance = " + balance
+            );
+        } else {
+            System.out.println(
+                Thread.currentThread().getName() +
+                " - Insufficient balance"
+            );
+        }
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+}
+
+class Customer extends Thread {
+
+    BankAccount account;
+
+    Customer(BankAccount account) {
+        this.account = account;
+    }
+
+    public void run() {
+        account.withdraw(500);
+        account.deposit(300);
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        BankAccount account = new BankAccount();
+
+        Customer t1 = new Customer(account);
+        Customer t2 = new Customer(account);
+        Customer t3 = new Customer(account);
+
+        t1.setName("Customer 1");
+        t2.setName("Customer 2");
+        t3.setName("Customer 3");
+
+        t1.start();
+        t2.start();
+        t3.start();
+
+        t1.join();
+        t2.join();
+        t3.join();
+
+        System.out.println("Final Balance = " + account.getBalance());
+    }
+}
